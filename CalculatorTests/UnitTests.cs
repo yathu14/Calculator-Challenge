@@ -77,9 +77,18 @@ namespace CalculatorTests
         public void InvalidateLargeNumbers()
         {
             string largeNumbers = "1,2,3,4,5,6,7,8,9,10,11,12,1001,2005";
-            
+
             var result = Calculator.Program.Add(largeNumbers);
             Assert.AreEqual(78, result);
+        }
+
+        [TestMethod]
+        public void SupportOneCustomDelimiterSingleChar()
+        {
+            string singleDelim = "//#\\n2#5";
+            
+            var result = Calculator.Program.Add(singleDelim);
+            Assert.AreEqual(7, result);
         }
     }
 }

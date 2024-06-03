@@ -32,8 +32,19 @@ namespace Calculator
             }
 
             //Add comma and newline delimiter 
-            var delimiters = new string [] { ",", "\\n"};
+            List<string> delimiterList = new List<string>();
+            delimiterList.Add(",");
+            delimiterList.Add("\\n");
 
+            var customtext = GetCustomDelimiter(numbers);
+
+            if (customtext != null) {
+                delimiterList.Add(customtext);
+            }
+
+            string[] delimiters = delimiterList.ToArray();
+
+            //Add comma and newline delimiter 
             var numArray = numbers.Split(delimiters, StringSplitOptions.None);           
                 
             var parsedNumber = numArray.Select(num =>
@@ -70,6 +81,24 @@ namespace Calculator
             int sum = parsedNumber.Sum();
 
             return sum;
+        }
+
+        static string GetCustomDelimiter(string input)
+        {
+            //Support 1 custom delimiter of a single character using the format: //{delimiter}\n{numbers}
+            if (input.StartsWith("//"))
+            {
+                int delimiterEndIndex = input.IndexOf("\\n");
+
+                //Limit to Single Character for Delimiter, Else return null
+                if (delimiterEndIndex > 2 && delimiterEndIndex <4)
+                {
+
+                    return input.Substring(2, delimiterEndIndex - 2);
+                }
+            }
+
+            return null;
         }
     }
 }
