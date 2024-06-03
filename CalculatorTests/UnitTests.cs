@@ -8,7 +8,7 @@ namespace CalculatorTests
         private const string twoValues = "2,3";
         private const string invalidValue = "2,t";
         private const string moreThanTwoValues = "2,3,4";
-
+        private const string newLineCharacter = "1\\n2,3";
 
         [TestMethod]
         public void SingleNumber()
@@ -43,6 +43,13 @@ namespace CalculatorTests
         {
             var result = Calculator.Program.Add(moreThanTwoValues);
             Assert.AreEqual(9, result);
+        }
+
+        [TestMethod]
+        public void SupportNewLineCharacter()
+        {
+            var result = Calculator.Program.Add(newLineCharacter);
+            Assert.AreEqual(6, result);
         }
     }
 }

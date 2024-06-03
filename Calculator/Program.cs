@@ -31,7 +31,10 @@ namespace Calculator
                 return 0;
             }
 
-            var numArray = numbers.Split(',');               
+            //Add comma and newline delimiter 
+            var delimiters = new string [] { ",", "\\n"};
+
+            var numArray = numbers.Split(delimiters, StringSplitOptions.None);           
                 
             var parsedNumber = numArray.Select(num =>
             {
