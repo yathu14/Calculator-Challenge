@@ -86,9 +86,27 @@ namespace CalculatorTests
         public void SupportOneCustomDelimiterSingleChar()
         {
             string singleDelim = "//#\\n2#5";
-            
+
             var result = Calculator.Program.Add(singleDelim);
             Assert.AreEqual(7, result);
+        }
+
+        [TestMethod]
+        public void SupportOneCustomDelimiterAnyChar()
+        {
+            string singleDelimAnyChar = "//[***]\\n11***22***33";
+
+            var result = Calculator.Program.Add(singleDelimAnyChar);
+            Assert.AreEqual(66, result);
+        }
+
+        [TestMethod]
+        public void SupportMultipleCustomDelimiterAnyChar()
+        {
+            string multipleDelim = "//[*][!!][r9r]\\n11r9r22*hh*33!!44";
+            
+            var result = Calculator.Program.Add(multipleDelim);
+            Assert.AreEqual(110, result);
         }
     }
 }

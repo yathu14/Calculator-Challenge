@@ -36,11 +36,7 @@ namespace Calculator
             delimiterList.Add(",");
             delimiterList.Add("\\n");
 
-            var customtext = GetCustomDelimiter(numbers);
-
-            if (customtext != null) {
-                delimiterList.Add(customtext);
-            }
+            var customtext = GetCustomDelimiter(delimiterList, numbers);
 
             string[] delimiters = delimiterList.ToArray();
 
@@ -83,18 +79,45 @@ namespace Calculator
             return sum;
         }
 
-        static string GetCustomDelimiter(string input)
+        static List<string> GetCustomDelimiter(List<string> delimiterList, string input)
         {
+            if (input.StartsWith("//["))
+            {
+                int delimiterEndIndex = input.IndexOf("]\\n");
+
+                //Any length Character for Delimiter, Else return null
+                if (delimiterEndIndex > 2)
+                {
+                    var customtext = input.Substring(2, delimiterEndIndex - 1);
+
+                    if (customtext != null)
+                    {
+                        string pattern = @"\[(.*?)\]";
+                        MatchCollection matches = Regex.Matches(customtext, pattern);
+                        foreach (Match match in matches)
+                        {
+
+                            delimiterList.Add(match.Groups[1].Value);
+                        }
+                    }
+
+                    return delimiterList;
+                }
+            }
             //Support 1 custom delimiter of a single character using the format: //{delimiter}\n{numbers}
-            if (input.StartsWith("//"))
+            else if (input.StartsWith("//"))
             {
                 int delimiterEndIndex = input.IndexOf("\\n");
 
                 //Limit to Single Character for Delimiter, Else return null
-                if (delimiterEndIndex > 2 && delimiterEndIndex <4)
+                if (delimiterEndIndex > 2 && delimiterEndIndex < 4)
                 {
 
-                    return input.Substring(2, delimiterEndIndex - 2);
+                    //return input.Substring(2, delimiterEndIndex - 2);
+                    var customtext = input.Substring(2, delimiterEndIndex - 2);
+                    delimiterList.Add(customtext);
+
+                    return delimiterList;
                 }
             }
 
