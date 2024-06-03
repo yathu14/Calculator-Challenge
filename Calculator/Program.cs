@@ -43,6 +43,23 @@ namespace Calculator
 
             }).ToArray();
 
+            //Make any value greater than 1000 an invalid number (invalid numbers are converted to 0), 
+            //calculation should continue and avoid the large number
+            parsedNumber = numArray.Select(num =>
+            {
+                if(int.TryParse(num, out int largeNumber)) { 
+                
+                    if (largeNumber > 1000)
+                    { 
+                        return 0; 
+                    }
+
+                    return largeNumber;
+                }
+                return 0;
+
+            }).ToArray();
+
             //Check for negative numbers, if found throw exception and include negatives in error message
             var negativeNumbers = parsedNumber.Where(n => n <0).ToArray();
             if (negativeNumbers.Any() )
