@@ -43,6 +43,13 @@ namespace Calculator
 
             }).ToArray();
 
+            //Check for negative numbers, if found throw exception and include negatives in error message
+            var negativeNumbers = parsedNumber.Where(n => n <0).ToArray();
+            if (negativeNumbers.Any() )
+            {
+                throw new ArgumentException($"Negative numbers not allowed, following are negative: {string.Join(", ",negativeNumbers)}");
+            }
+
             int sum = parsedNumber.Sum();
 
             return sum;

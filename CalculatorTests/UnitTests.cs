@@ -3,16 +3,11 @@ namespace CalculatorTests
     [TestClass]
     public class UnitTests
     {
-        private const string emptyInput = "";
-        private const string oneValue = "2";
-        private const string twoValues = "2,3";
-        private const string invalidValue = "2,t";
-        private const string moreThanTwoValues = "2,3,4";
-        private const string newLineCharacter = "1\\n2,3";
-
         [TestMethod]
         public void SingleNumber()
         {
+            string oneValue = "2";
+
             var result = Calculator.Program.Add(oneValue);
             Assert.AreEqual(2, result);
         }
@@ -20,6 +15,8 @@ namespace CalculatorTests
         [TestMethod]
         public void TwoNumbers()
         {
+            string twoValues = "2,3";
+
             var result = Calculator.Program.Add(twoValues);
             Assert.AreEqual(5, result);
         }
@@ -27,6 +24,8 @@ namespace CalculatorTests
         [TestMethod]
         public void EmptyInput()
         {
+            string emptyInput = "";
+
             var result = Calculator.Program.Add(emptyInput);
             Assert.AreEqual(0, result);
         }
@@ -34,6 +33,8 @@ namespace CalculatorTests
         [TestMethod]
         public void InvalidValue()
         {
+            string invalidValue = "2,t";
+
             var result = Calculator.Program.Add(invalidValue);
             Assert.AreEqual(2, result);
         }
@@ -41,6 +42,8 @@ namespace CalculatorTests
         [TestMethod]
         public void MoreThanTwoValues()
         {
+            string moreThanTwoValues = "2,3,4";
+
             var result = Calculator.Program.Add(moreThanTwoValues);
             Assert.AreEqual(9, result);
         }
@@ -48,8 +51,26 @@ namespace CalculatorTests
         [TestMethod]
         public void SupportNewLineCharacter()
         {
+            string newLineCharacter = "1\\n2,3";
+
             var result = Calculator.Program.Add(newLineCharacter);
             Assert.AreEqual(6, result);
+        }
+
+        [TestMethod]
+        public void DenyNegativeNumbers()
+        {
+            var negativeNumbers = "2,3,-4";
+            string expectedErrorMessage = "Negative numbers not allowed, following are negative: -4";
+
+            try
+            {
+                var result = Calculator.Program.Add(negativeNumbers);
+            }
+            catch (ArgumentException ex)
+            {
+                Assert.AreEqual(expectedErrorMessage, ex.Message);
+            }
         }
     }
 }
