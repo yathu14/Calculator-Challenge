@@ -39,11 +39,10 @@ namespace CalculatorTests
         }
 
         [TestMethod]
-        public void MoreThanTwoValuesException()
+        public void MoreThanTwoValues()
         {
-           string expectedErrorMessage = "Only maximum of 2 numbers allowed";
-           var result = Assert.ThrowsException<Exception>(() => Calculator.Program.Add(moreThanTwoValues));
-           Assert.AreEqual(expectedErrorMessage, result.Message);
+            var result = Calculator.Program.Add(moreThanTwoValues);
+            Assert.AreEqual(9, result);
         }
     }
 }

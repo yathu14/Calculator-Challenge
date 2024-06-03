@@ -31,13 +31,7 @@ namespace Calculator
                 return 0;
             }
 
-            var numArray = numbers.Split(',');
-
-            if (numArray.Length > 2)
-            { 
-                throw new Exception("Only maximum of 2 numbers allowed");
-            }
-                
+            var numArray = numbers.Split(',');               
                 
             var parsedNumber = numArray.Select(num =>
             {
